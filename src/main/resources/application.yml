@@ -1,0 +1,10 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/dbbookmanager?serverTimezone=GMT
+    username: root
+    password: 123456
