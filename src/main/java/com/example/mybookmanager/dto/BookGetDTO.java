@@ -1,32 +1,54 @@
-package com.example.mybookmanager.entity;
+package com.example.mybookmanager.dto;
 
-import javax.persistence.*;
-import java.util.Set;
+import com.example.mybookmanager.entity.BookEntity;
+import com.example.mybookmanager.entity.BookType;
 
-@Entity
-@Table(name = "book")
-public class BookEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "book_id",unique = true)
-    //图书编号
+import java.util.ArrayList;
+import java.util.List;
+
+public class BookGetDTO {
     private long bookId;
-
-    @OneToMany(mappedBy = "parentBook", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Set<BookItemEntity> bookItemEntities;
 
     private String bookName;
     private String bookIsbn;
     private BookType bookType;
     private String bookAuthor;
-
     private String bookDescription;
     private String bookImgUrl;
+
     private Integer bookTotalNum;
     private Integer bookInLoadNum;
 
+    public static BookGetDTO fromEntity(BookEntity bookEntity) {
+        BookGetDTO bookGetDTO = new BookGetDTO();
+
+        bookGetDTO.setBookId(bookEntity.getBookId());
+        bookGetDTO.setBookName(bookEntity.getBookName());
+        bookGetDTO.setBookIsbn(bookEntity.getBookIsbn());
+        bookGetDTO.setBookType(bookEntity.getBookType());
+        bookGetDTO.setBookAuthor(bookEntity.getBookAuthor());
+        bookGetDTO.setBookDescription(bookEntity.getBookDescription());
+        bookGetDTO.setBookImgUrl(bookEntity.getBookImgUrl());
+        bookGetDTO.setBookTotalNum(bookEntity.getBookTotalNum());
+        bookGetDTO.setBookInLoadNum(bookEntity.getBookInLoadNum());
+        return bookGetDTO;
+    }
+
+    public static List<BookGetDTO> fromEntityList(List<BookEntity> bookEntityList) {
+        List<BookGetDTO> bookGetDTOList = new ArrayList<>();
+        for (BookEntity iter : bookEntityList
+        ) {
+            bookGetDTOList.add(fromEntity(iter));
+        }
+        return bookGetDTOList;
+    }
+
     public long getBookId() {
         return bookId;
+    }
+
+    public void setBookId(long bookId) {
+        this.bookId = bookId;
     }
 
     public String getBookName() {
@@ -92,14 +114,4 @@ public class BookEntity {
     public void setBookInLoadNum(Integer bookInLoadNum) {
         this.bookInLoadNum = bookInLoadNum;
     }
-
-    public Set<BookItemEntity> getBookItemEntities() {
-        return bookItemEntities;
-    }
-
-    public void setBookItemEntities(Set<BookItemEntity> bookItemEntities) {
-        this.bookItemEntities = bookItemEntities;
-    }
-
-
 }

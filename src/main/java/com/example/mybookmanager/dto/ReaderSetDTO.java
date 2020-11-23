@@ -1,20 +1,25 @@
-package com.example.mybookmanager.entity;
+package com.example.mybookmanager.dto;
 
-import javax.persistence.*;
+import com.example.mybookmanager.entity.BookItemEntity;
+import com.example.mybookmanager.entity.ReaderEntity;
+
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.Set;
 
-@Entity
-@Table(name = "reader")
-public class ReaderEntity {
-    @Id
-    @Column(name = "reader_id", unique = true)
+public class ReaderSetDTO {
     private long readerId;
-
     private String readerName;
     private String readerPassword;
 
-    @OneToMany(mappedBy = "bookItemLoader", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Set<BookItemEntity> loadBookItemSet;
+    public static ReaderEntity toEntity(ReaderSetDTO readerSetDTO){
+        ReaderEntity readerEntity = new ReaderEntity();
+        readerEntity.setReaderId(readerSetDTO.getReaderId());
+        readerEntity.setReaderName(readerSetDTO.getReaderName());
+        readerEntity.setReaderPassword(readerSetDTO.getReaderPassword());
+
+        return readerEntity;
+    }
 
     public long getReaderId() {
         return readerId;
@@ -39,14 +44,4 @@ public class ReaderEntity {
     public void setReaderPassword(String readerPassword) {
         this.readerPassword = readerPassword;
     }
-
-    public Set<BookItemEntity> getLoadBookItemSet() {
-        return loadBookItemSet;
-    }
-
-    public void setLoadBookItemSet(Set<BookItemEntity> loadBookItemSet) {
-        this.loadBookItemSet = loadBookItemSet;
-    }
 }
-
-

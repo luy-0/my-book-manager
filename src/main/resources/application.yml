@@ -5,6 +5,11 @@ spring:
     show-sql: true
 
   datasource:
-    url: jdbc:mysql://localhost:3306/dbbookmanager?serverTimezone=GMT
+    url: "jdbc:mysql://ali.117503445.top:3399/dbbookmanager?serverTimezone=GMT&useUnicode=true&characterEncoding=utf-8"
     username: root
-    password: 123456
+    password: hbhb
+
+server:
+  servlet:
+    encoding:
+      charset: utf-8

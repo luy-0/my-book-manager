@@ -1,22 +1,34 @@
 package com.example.mybookmanager.entity;
 
-import org.springframework.data.annotation.Id;
+import com.example.mybookmanager.entity.BookEntity;
+import com.example.mybookmanager.entity.ReaderEntity;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
+@Entity
+@Table(name = "bootitem")
 public class BookItemEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "book_item_id", unique = true)
     private long bookItemId;
-
-    @ManyToOne(targetEntity = BookEntity.class)
-    private BookEntity parentBook;
-
     private boolean isLoad;
 
+    @ManyToOne(targetEntity = BookEntity.class)
+    @JoinColumn(name = "parent_book_id", referencedColumnName = "book_id", foreignKey = @ForeignKey(name = "fk_item_parent"))
+    private BookEntity parentBook;
+
+    @ManyToOne(targetEntity = ReaderEntity.class)
+    @JoinColumn(name = "loader_id", referencedColumnName = "reader_id", foreignKey = @ForeignKey(name = "fk_item_loader"))
     private ReaderEntity bookItemLoader;
+
+    public long getBookItemId() {
+        return bookItemId;
+    }
+
+    public void setBookItemId(long bookItemId) {
+        this.bookItemId = bookItemId;
+    }
 
     public BookEntity getParentBook() {
         return parentBook;
